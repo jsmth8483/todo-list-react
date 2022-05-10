@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
+import ls from 'local-storage';
 import Header from './components/Header';
 import AddTodo from './components/AddTodo';
 import './App.css';
 import TodoList from './components/TodoList';
-import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers';
 
 class App extends Component {
 	constructor(props) {
@@ -21,28 +21,8 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		const todos = [
-			{
-				id: uuid(),
-				title: 'thing1',
-				completed: false,
-				editable: false,
-			},
-			{
-				id: uuid(),
-				title: 'thing2',
-				completed: false,
-				editable: false,
-			},
-			{
-				id: uuid(),
-				title: 'thing3',
-				completed: false,
-				editable: false,
-			},
-		];
 		this.setState({
-			todos: todos,
+			todos: ls.get('todos') || [],
 		});
 	}
 
@@ -53,6 +33,10 @@ class App extends Component {
 			completed: false,
 			editable: false,
 		};
+
+		const currentTodos = ls.get('todos') || [];
+		ls.set('todos', [...currentTodos, newTodo]);
+
 		this.setState({
 			todos: [...this.state.todos, newTodo],
 		});
@@ -81,6 +65,7 @@ class App extends Component {
 		todo.title = todoTitle;
 		todo.editable = false;
 		todos[todoIndexToEdit] = todo;
+		ls.set('todos', todos);
 		this.setState({
 			todos: todos,
 		});

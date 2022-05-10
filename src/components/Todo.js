@@ -35,7 +35,7 @@ class Todo extends Component {
 				/>
 			);
 		} else {
-			todoTitle = <span classname="todo-title">{this.props.title}</span>;
+			todoTitle = <span className="todo-title">{this.props.title}</span>;
 		}
 		return (
 			<div className="todo">

@@ -17,6 +17,7 @@ class TodoList extends Component {
 							onSave={this.props.onSave}
 							onCancelEdit={this.props.onCancelEdit}
 							onDelete={this.props.onDelete}
+							onComplete={this.props.onComplete}
 						/>
 					);
 				})}

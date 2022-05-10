@@ -18,6 +18,7 @@ class App extends Component {
 		this.handleEditTodo = this.handleEditTodo.bind(this);
 		this.handleSaveTodo = this.handleSaveTodo.bind(this);
 		this.handleCancelEditTodo = this.handleCancelEditTodo.bind(this);
+		this.handleCompleteTodo = this.handleCompleteTodo.bind(this);
 	}
 
 	componentDidMount() {
@@ -91,6 +92,21 @@ class App extends Component {
 		);
 		const todos = this.state.todos.slice();
 		todos.splice(todoIndexToDelete, 1);
+		ls.set('todos', todos);
+		this.setState({
+			todos: todos,
+		});
+	}
+
+	handleCompleteTodo(todoId) {
+		const todoIndexToEdit = this.state.todos.findIndex(
+			(todo) => todo.id === todoId
+		);
+		const todos = this.state.todos.slice();
+		const todo = { ...todos[todoIndexToEdit] };
+		todo.completed = !todo.completed;
+		todos[todoIndexToEdit] = todo;
+		ls.set('todos', todos);
 		this.setState({
 			todos: todos,
 		});
@@ -107,6 +123,7 @@ class App extends Component {
 					onSave={this.handleSaveTodo}
 					onCancelEdit={this.handleCancelEditTodo}
 					onDelete={this.handleDeleteTodo}
+					onComplete={this.handleCompleteTodo}
 				/>
 			</div>
 		);
